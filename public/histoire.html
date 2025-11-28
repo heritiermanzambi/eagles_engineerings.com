@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      AdonisJS - A fully featured web framework for Node.js
+    </title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link
+      href="https://fonts.bunny.net/css?family=instrument-sans:400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --sand-1: #fdfdfc;
+        --sand-2: #f9f9f8;
+        --sand-3: #f1f0ef;
+        --sand-4: #e9e8e6;
+        --sand-5: #e2e1de;
+        --sand-6: #dad9d6;
+        --sand-7: #cfceca;
+        --sand-8: #bcbbb5;
+        --sand-9: #8d8d86;
+        --sand-10: #82827c;
+        --sand-11: #63635e;
+        --sand-12: #21201c;
+      }
+    </style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [ "Instrument Sans", "sans-serif" ]
+            },
+            colors: {
+              primary: {
+                DEFAULT: "#5A45FF",
+                lighter: "#a599ff"
+              },
+              sand: {
+                1: "var(--sand-1)",
+                2: "var(--sand-2)",
+                3: "var(--sand-3)",
+                4: "var(--sand-4)",
+                5: "var(--sand-5)",
+                6: "var(--sand-6)",
+                7: "var(--sand-7)",
+                8: "var(--sand-8)",
+                9: "var(--sand-9)",
+                10: "var(--sand-10)",
+                11: "var(--sand-11)",
+                12: "var(--sand-12)"
+              },
+              'yellow-custom': '#FFD700',
+              'black-custom': '#000000'
+            }
+          }
+        }
+      };
+    </script>
+
+    <style>
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        .carousel-slide {
+            display: none;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .carousel-slide.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+        .testimonial-card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Animation pour le carrousel */
+        @keyframes fade {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            30% { opacity: 1; }
+            40% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        .carousel-item {
+            animation: fade 15s infinite;
+            position: absolute;
+            width: 100%;
+        }
+        
+        .carousel-item:nth-child(1) { animation-delay: 0s; }
+        .carousel-item:nth-child(2) { animation-delay: 5s; }
+        .carousel-item:nth-child(3) { animation-delay: 10s; }
+        
+        /* Animation pour les témoignages */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 5)); }
+        }
+        
+        .testimonial-slider {
+            animation: scroll 25s linear infinite;
+        }
+
+         .hover-lift {
+            transition: transform 0.2s ease-in-out;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+
+
+          .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+        .chatbot-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+        }
+        .chatbot-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+        }
+        .user-message {
+            align-self: flex-end;
+            background: #667eea;
+            color: white;
+        }
+        .bot-message {
+            align-self: flex-start;
+            background: #f1f3f4;
+            color: #333;
+        }
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            gap: 10px;
+        }
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+        }
+        .send-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Styles personnalisés pour le fond noir du header (comme dans l'image) */
+        .hero-black-bg {
+            background-color: #000;
+        }
+        /* Styles pour une meilleure lisibilité des blocs d'images composites */
+        .image-composite {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem; /* espace entre les images */
+        }
+        @media (min-width: 640px) { /* breakpoint sm */
+            .image-composite {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Navigation -->
+    <nav class="bg-yellow-custom shadow-md fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img src="./images/logo.png" alt="aigle engineering" class="h-24 w-auto mr-2">
+                        <!--span class="text-xl font-bold text-black-custom">aigle engineering</span!-->
+                    </div>
+                </div>
+
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="home.html" class="text-black-custom hover:text-black-custom transition font-medium">Accueil</a>
+    <a href="services.html" class="text-black-custom hover:text-black-custom transition font-medium">Nos services</a>
+    <a href="#histoire" class="text-black-custom hover:text-black-custom transition font-medium">Notre histoire</a>
+    <a href="realisations.html" class="text-black-custom hover:text-black-custom transition font-medium">Nos réalisations</a>
+    <a href="avis.html" class="text-black-custom hover:text-black-custom transition font-medium">Avis clients</a>
+    <a href="https://wa.me/243858444000?text=Bonjour,%20je%20suis%20intéressé(e)%20par%20vos%20services%20de%20maintenance%20préventive" 
+       target="_blank" 
+       class="text-black-custom font-bold hover:text-green-600 transition flex items-center">
+        +243 858 444 000
+        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.017 2.047C6.207 2.047 1.451 6.804 1.451 12.614c0 1.846.48 3.582 1.32 5.082L2 22l4.396-.771c1.454.78 3.102 1.227 4.621 1.227 5.811 0 10.567-4.756 10.567-10.567S17.828 2.047 12.017 2.047zm-5.94 14.57a7.86 7.86 0 01-1.3-4.623c0-4.35 3.536-7.886 7.886-7.886s7.886 3.536 7.886 7.886-3.536 7.886-7.886 7.886a7.83 7.83 0 01-3.785-.975l-.801-.419-2.001.35.373-.763a7.9 7.9 0 01-1.372-2.455zm10.19-5.926l-1.552 1.552-1.552-1.552-3.104 3.104 1.552 1.552 1.552 1.552 1.552-1.552 3.104-3.104-1.552-1.552z"/>
+        </svg>
+    </a>
+                </div>
+
+                <!-- Menu Mobile -->
+                <div class="md:hidden flex items-center">
+                    <button id="menu-toggle" class="text-black-custom focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile Dropdown -->
+        <div id="mobile-menu" class="md:hidden hidden bg-yellow-custom">
+            <div class="px-0 pt-2 pb-3 space-y-1 sm:px-3">
+               <a href="home.html" class="block px-3 py-2 text-black-custom hover:text-black-custom font-medium">Accueil</a>
+<a href="services.html" class="block px-3 py-2 text-black-custom hover:text-black-custom font-medium">Nos services</a>
+<a href="histoire.html" class="block px-3 py-2 text-black-custom hover:text-black-custom font-medium">Notre histoire</a>
+<a href="realisations.html" class="block px-3 py-2 text-black-custom hover:text-black-custom font-medium">Nos réalisations</a>
+<a href="avis.html" class="block px-3 py-2 text-black-custom hover:text-black-custom font-medium">Avis clients</a>
+<a href="https://wa.me/243858444000?text=Bonjour,%20je%20suis%20intéressé(e)%20par%20vos%20services%20de%20maintenance%20préventive" 
+   target="_blank" 
+   class="block px-3 py-2 text-black-custom hover:text-green-600 font-bold flex items-center justify-between">
+    <span>+243 858 444 000</span>
+    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.017 2.047C6.207 2.047 1.451 6.804 1.451 12.614c0 1.846.48 3.582 1.32 5.082L2 22l4.396-.771c1.454.78 3.102 1.227 4.621 1.227 5.811 0 10.567-4.756 10.567-10.567S17.828 2.047 12.017 2.047zm-5.94 14.57a7.86 7.86 0 01-1.3-4.623c0-4.35 3.536-7.886 7.886-7.886s7.886 3.536 7.886 7.886-3.536 7.886-7.886 7.886a7.83 7.83 0 01-3.785-.975l-.801-.419-2.001.35.373-.763a7.9 7.9 0 01-1.372-2.455zm10.19-5.926l-1.552 1.552-1.552-1.552-3.104 3.104 1.552 1.552 1.552 1.552 1.552-1.552 3.104-3.104-1.552-1.552z"/>
+    </svg>
+</a>
+            </div>
+        </div>
+    </nav>
+
+<section id="eagle-presentation" class="bg-white py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <header class="mb-12 md:mb-16 flex items-center justify-start">
+            <div id="logo-animated-container" class="w-16 h-16 md:w-20 md:h-20 mr-4">
+                            </div>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-orange-500">
+                Eagle
+                <span class="block text-xl md:text-2xl text-black font-semibold tracking-wider -mt-2">ENGINEERINGS</span>
+            </h1>
+        </header>
+
+        <article class="text-gray-700 space-y-6 md:space-y-8 text-lg leading-relaxed">
+            <p>
+                Basé en République Démocratique du Congo et fondée en 2013, <strong class="text-black">Eagle Engineerings</strong> propose à ses clients des expertises fortes autour des problématiques de la <strong class="text-orange-500">Nouvelle Technologie de l'Information et de la Communication (NTIC)</strong>, <strong class="text-orange-500">Énergie</strong> et <strong class="text-orange-500">Génie Civil</strong>.
+            </p>
+            <p>
+                Avec plus de 7 ans d'expérience, nous vous accompagnons au travers de nos différents secteurs d'activités pour vous apporter des solutions en parfaite adéquation avec vos objectifs.
+            </p>
+            <blockquote class="border-l-4 border-orange-500 pl-4 italic text-gray-600">
+                <p>
+                    E-Engin en sigle, <strong class="text-orange-500">Eagle Engineerings</strong> est une société à responsabilité limitée, régie par l'acte uniforme de l'Ohada relatif au droit des sociétés commerciales et du Gie. Composé d'une équipe qui se démarque par sa réactivité et son expertise très appréciées, nous vous garantissons une écoute et un accompagnement de qualité.
+                </p>
+            </blockquote>
+            <p class="font-bold text-xl text-black">
+                <span class="text-orange-500">Fiez-vous à nous</span>, vous y prendrez l'habitude de collaborer avec nous.
+            </p>
+        </article>
+    </div>
+</section>
+
+<section class="bg-black py-12 md:py-16 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-center">
+        <p class="text-2xl md:text-3xl lg:text-4xl font-light">
+            Notre force réside dans la <strong class="text-orange-500 font-bold">qualité de nos prestations</strong> et l'<strong class="text-orange-500 font-bold">esprit d'excellence</strong> qui nous anime.
+        </p>
+    </div>
+</section>
+
+    
+
+
+
+    <!-- Footer -->
+    <footer class="bg-black-custom text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2023 Manzambi Services. Tous droits réservés.</p>
+                </div>
+                <div>
+                    <p>Développé par <a href="https://linkedin.com/in/heritier-manzambi" class="text-yellow-custom hover:underline">Heritier Manzambi</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+    
+
+
+        document.getElementById('testimonial-prev').addEventListener('click', () => {
+            showTestimonial(currentTestimonial - 1);
+        });
+
+        document.getElementById('testimonial-next').addEventListener('click', () => {
+            showTestimonial(currentTestimonial + 1);
+        });
+
+        // Navigation fluide
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Fermer le menu mobile si ouvert
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+          let isChatbotOpen = false;
+
+        function toggleChatbot() {
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            isChatbotOpen = !isChatbotOpen;
+            chatbotWindow.style.display = isChatbotOpen ? 'flex' : 'none';
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const message = userInput.value.trim();
+
+            if (message === '') return;
+
+            // Ajouter le message de l'utilisateur
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            messagesContainer.appendChild(userMessage);
+
+            // Réponse automatique simple (à améliorer)
+            setTimeout(() => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot-message';
+                
+                // Réponses prédéfinies basiques
+                const responses = {
+                    'bonjour': 'Bonjour ! Comment puis-je vous aider ?',
+                    'prix': 'Pour connaître nos tarifs, veuillez nous contacter par téléphone ou email.',
+                    'service': 'Nous proposons des services de maintenance préventive pour supermarchés.',
+                    'contact': 'Vous pouvez nous joindre au +243 858 444 000 ou par email.',
+                    'default': 'Je comprends votre demande. Un de nos conseillers vous répondra rapidement.'
+                };
+
+                const lowerMessage = message.toLowerCase();
+                let response = responses.default;
+
+                for (const [key, value] of Object.entries(responses)) {
+                    if (lowerMessage.includes(key)) {
+                        response = value;
+                        break;
+                    }
+                }
+
+                botMessage.textContent = response;
+                messagesContainer.appendChild(botMessage);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+
+            userInput.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+         // Assurez-vous que le HTML de votre logo a l'ID 'gear-to-rotate' 
+// pour la partie de la roue dentée qui doit tourner.
+// Si votre logo est une seule image PNG/JPG, cette animation est limitée. 
+// Pour un effet de rotation, il est ESSENTIEL d'utiliser un format SVG
+// où la roue dentée est un élément séparé.
+
+document.addEventListener('DOMContentLoaded', () => {
+    const gearElement = document.getElementById('gear-to-rotate');
+
+    if (gearElement && typeof gsap !== 'undefined') {
+        // Animation GSAP pour une rotation continue (infinie)
+        gsap.to(gearElement, {
+            rotation: 360,           // Rotation de 360 degrés
+            duration: 5,             // Durée de 5 secondes pour un tour
+            ease: "none",            // Vitesse constante
+            repeat: -1               // Répétition infinie
+        });
+        
+        // Exemple d'animation au survol (hover)
+        const logoContainer = document.getElementById('logo-animated-container');
+        if(logoContainer) {
+            logoContainer.addEventListener('mouseenter', () => {
+                gsap.to(logoContainer, { scale: 1.1, duration: 0.3 }); // Agrandit légèrement
+            });
+
+            logoContainer.addEventListener('mouseleave', () => {
+                gsap.to(logoContainer, { scale: 1, duration: 0.3 }); // Revient à la taille normale
+            });
+        }
+    } else if (!gearElement) {
+        console.warn("L'élément avec l'ID 'gear-to-rotate' est introuvable. L'animation ne peut pas démarrer.");
+    } else {
+         console.warn("GSAP n'est pas chargé. L'animation ne peut pas démarrer.");
+    }
+});
+
+    </script>
+</body>
+</html>

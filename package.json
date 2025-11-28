@@ -1,0 +1,16 @@
+{
+"name": "site-vitrine",
+"version": "1.0.0",
+"description": "Site vitrine simple (Tailwind CDN + Express)",
+"main": "backend/server.js",
+"scripts": {
+"start": "node backend/server.js",
+"dev": "nodemon backend/server.js"
+},
+"dependencies": {
+"express": "^4.18.2"
+},
+"devDependencies": {
+"nodemon": "^2.0.22"
+}
+}

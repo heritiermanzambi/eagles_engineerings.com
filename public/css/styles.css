@@ -1,0 +1,15 @@
+/* Animations personnalisées */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px);} to { opacity: 1; transform: translateY(0);} }
+.animate-fade-up { animation: fadeUp 700ms ease forwards; }
+
+
+@keyframes scrollUp { 0%{ transform: translateY(20%); } 100%{ transform: translateY(-20%);} }
+.animate-scroll-up { animation: scrollUp 12s linear infinite; }
+
+
+/* Hero quote style: transition */
+.hero-quote { transition: opacity 600ms ease, transform 600ms ease; }
+
+
+/* Simple utility for hidden but accessible */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
