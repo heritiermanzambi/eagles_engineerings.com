@@ -243,6 +243,33 @@
                 grid-template-columns: 1fr 1fr;
             }
         }
+
+
+        /* Styles personnalisés pour des animations spécifiques */
+        .project-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .project-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animation pour les filtres */
+        .filter-button {
+            transition: all 0.3s ease-in-out;
+        }
+        .filter-button.active {
+            background-color: #fcd34d; /* yellow-300 */
+            color: #1f2937; /* gray-800 */
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .filter-button:hover:not(.active) {
+            background-color: #374151; /* gray-700 */
+            color: #f9fafb; /* gray-50 */
+        }
     </style>
 </head>
 <body class="font-sans">
@@ -306,239 +333,124 @@
         </div>
     </nav>
 
-<!-- Section Accueil - Carrousel -->
-<section class="py-16 bg-gray-50">
-  <div class="container mx-auto px-6 lg:px-16">
 
-    <!-- Titre -->
-    <h2 class="text-4xl font-bold text-gray-800 mb-10 text-center">
-      Telcome
-    </h2>
 
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
 
-      <!-- IMAGE PRINCIPALE -->
-      <div class="relative opacity-0 translate-y-8 transition-all duration-700 scroll-animate">
-        <img src="./images/bts.jpg" alt="" 
-             class="rounded-2xl shadow-xl object-cover w-full h-72">
+
+
+<!-- SECTION CONTACT -->
+<section class="relative bg-gradient-to-b from-yellow-500 to-blue-700 py-24 px-6">
+  <div class="max-w-6xl mx-auto text-center text-white mb-16">
+    <h2 class="text-4xl font-bold">Contact nous</h2>
+    <p class="mt-2 text-lg opacity-90">Nous sommes prêts à fournir la bonne solution selon vos besoins</p>
+  </div>
+
+  <!-- WHITE CARD -->
+  <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-10 grid lg:grid-cols-2 gap-12 contact-card opacity-0 translate-y-10 transition-all duration-700">
+    
+    <!-- LEFT SIDE -->
+    <div>
+      <h3 class="text-2xl font-semibold text-gray-800 mb-6">entrer en contact</h3>
+      <p class="text-gray-600 mb-8"></p>
+
+      <!-- INFO BLOCK -->
+      <div class="space-y-6">
         
-        <!-- Image flottante -->
-        <img src="./images/bts2.jpg" alt=""
-             class="absolute -bottom-10 right-4 w-48 rounded-xl shadow-lg 
-             border-4 border-white transform hover:scale-105 transition duration-500">
+        <!-- Office -->
+        <div class="flex items-start gap-4">
+          <div class="bg-blue-600 text-white p-3 rounded-full">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800">Adresse</h4>
+            <p class="text-gray-600 text-sm">Avenue de la Justice, N°123Gombe, Kinshasa  306</p>
+            <p class="text-gray-600 text-sm"> avenue de la GombeLocal 6,<br> Hôtel VenusKinshasa-Gombe<br>République Démocratique du Congo</p>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="flex items-start gap-4">
+          <div class="bg-blue-600 text-white p-3 rounded-full">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800">Email Us</h4>
+            <p class="text-gray-600 text-sm">support@yourdomain.com</p>
+          </div>
+        </div>
+
+        <!-- Call -->
+        <div class="flex items-start gap-4">
+          <div class="bg-blue-600 text-white p-3 rounded-full">
+            <i class="fa-solid fa-phone"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800">Contact nous</h4>
+            <p class="text-gray-600 text-sm">+243 858 444 000</p>
+          </div>
+        </div>
+
       </div>
-      
 
-      <!-- TEXTE -->
-      <div class="opacity-0 translate-y-8 transition-all duration-700 delay-200 scroll-animate">
-        <p class="text-gray-700 leading-relaxed mb-5">
-   Dans sa politique de construction des sites
-GSM, Eagle Engineerings est doté d’une
-équipe des experts en la matière, qui
-s’occupe également de l’installation des
-équipements radio (RFS et BTS).
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-5">
-          <span class="font-semibold text-blue-600">Nous prenons toujours soins d’étudier et
-de planifier la réalisation de vos projets,
-nous exécutons des liaisons de transmission
-point à point et multipoints de courte,
-moyenne et longue distance par câble
-(paire torsadée, fibre optique...) ou par onde
-électromagnétique (faisceaux hertziens,
-VSAT et fibre optique) ; l’optimisation des
-réseaux GSM : site Survey, drive test, site
-acquisition, antenna tilt, etc.
-        </p>
-
-     
-
+      <!-- Social -->
+      <p class="mt-10 text-gray-800 font-semibold">Follow our social media</p>
+      <div class="flex gap-4 mt-4">
+        <a class="text-blue-600 text-xl hover:text-blue-800"><i class="fa-brands fa-facebook"></i></a>
+        <a class="text-blue-600 text-xl hover:text-blue-800"><i class="fa-brands fa-twitter"></i></a>
+        <a class="text-blue-600 text-xl hover:text-blue-800"><i class="fa-brands fa-instagram"></i></a>
+        <a class="text-blue-600 text-xl hover:text-blue-800"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
     </div>
+
+    <!-- RIGHT SIDE : FORM -->
+    <div>
+      <h3 class="text-2xl font-semibold text-gray-800 mb-6">nous envoyer un message</h3>
+
+      <form class="space-y-5">
+        <div class="grid grid-cols-2 gap-4">
+          <input type="text" placeholder="Name" class="input">
+          <input type="text" placeholder="Company" class="input">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <input type="text" placeholder="Phone" class="input">
+          <input type="email" placeholder="Email" class="input">
+        </div>
+        <textarea placeholder="Message" class="input h-28"></textarea>
+
+        <button class="w-full bg-yellow-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-300 transition">
+          Send
+        </button>
+      </form>
+    </div>
+
   </div>
 </section>
 
+<!-- SCROLL REVEAL ANIMATION -->
+<script>
+  function revealContact() {
+    const card = document.querySelector(".contact-card");
+    if (card.getBoundingClientRect().top < window.innerHeight - 100) {
+      card.classList.remove("opacity-0", "translate-y-10");
+    }
+  }
+  window.addEventListener("scroll", revealContact);
+  window.addEventListener("load", revealContact);
+</script>
 
+<!-- INPUT STYLE -->
+<style>
+  .input {
+    @apply w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none;
+  }
+</style>
 
-
-<section class="py-16 bg-gray-50">
-  <div class="container mx-auto px-6 lg:px-16">
-
-    <!-- Titre -->
-    <h2 class="text-4xl font-bold text-gray-800 mb-10 text-center">
-      Informatique
-    </h2>
-
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-      <!-- IMAGE PRINCIPALE -->
-      <div class="relative opacity-0 translate-y-8 transition-all duration-700 scroll-animate">
-        <img src="./images/maintordi.jpg" alt="" 
-             class="rounded-2xl shadow-xl object-cover w-full h-72">
-        
-        <!-- Image flottante -->
-        <img src="./images/laptop.jpg" alt=""
-             class="absolute -bottom-10 right-4 w-48 rounded-xl shadow-lg 
-             border-4 border-white transform hover:scale-105 transition duration-500">
-      </div>
-      
-
-      <!-- TEXTE -->
-      <div class="opacity-0 translate-y-8 transition-all duration-700 delay-200 scroll-animate">
-        <p class="text-gray-700 leading-relaxed mb-5">
-          Avec le développement des nouvelles technologies de l’information et de la communication
-          (NTIC), de plus en plus d’entreprises sont équipées de postes informatiques. La complexité
-          des logiciels et de vos matériels informatiques requiert bien souvent un service de maintenance.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-5">
-          <span class="font-semibold text-blue-600">Eagle Engineering</span> assure la maintenance
-          des parcs informatiques des PME, Corporate et clients résidentiels.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-5">
-          Garantissez le bon fonctionnement de votre système d'information grâce à une maintenance 
-          proactive. Nous maximisons la fiabilité et la durabilité de votre équipement informatique.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed">
-          De plus, <span class="font-semibold text-blue-600">Eagle Engineering</span> assure la 
-          maintenance des imprimantes ainsi que le déploiement des réseaux informatiques d’entreprise.
-        </p>
-
-        <!-- Bouton -->
-        <a href=""
-           class="inline-block mt-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 
-                  text-white font-semibold rounded-xl shadow-md transform 
-                  hover:scale-105 transition duration-300">
-          En savoir plus
-        </a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
-<section class="py-16 bg-gray-50">
-  <div class="container mx-auto px-6 lg:px-16">
-
-    <!-- Titre -->
-    <h2 class="text-4xl font-bold text-gray-800 mb-10 text-center">
-      Engerie
-    </h2>
-
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-      <!-- IMAGE PRINCIPALE -->
-      <div class="relative opacity-0 translate-y-8 transition-all duration-700 scroll-animate">
-        <img src="./images/power.jpg" alt="" 
-             class="rounded-2xl shadow-xl object-cover w-full h-72">
-        
-        <!-- Image flottante -->
-        <img src="./images/tde.jpg" alt=""
-             class="absolute -bottom-10 right-4 w-48 rounded-xl shadow-lg 
-             border-4 border-white transform hover:scale-105 transition duration-500">
-      </div>
-      
-
-      <!-- TEXTE -->
-      <div class="opacity-0 translate-y-8 transition-all duration-700 delay-200 scroll-animate">
-        <p class="text-gray-700 leading-relaxed mb-5">
-          Avec le développement des nouvelles technologies de l’information et de la communication
-          (NTIC), de plus en plus d’entreprises sont équipées de postes informatiques. La complexité
-          des logiciels et de vos matériels informatiques requiert bien souvent un service de maintenance.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-5">
-          <span class="font-semibold text-blue-600">Eagle Engineering</span> assure la maintenance
-          des parcs informatiques des PME, Corporate et clients résidentiels.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-5">
-          Garantissez le bon fonctionnement de votre système d'information grâce à une maintenance 
-          proactive. Nous maximisons la fiabilité et la durabilité de votre équipement informatique.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed">
-          De plus, <span class="font-semibold text-blue-600">Eagle Engineering</span> assure la 
-          maintenance des imprimantes ainsi que le déploiement des réseaux informatiques d’entreprise.
-        </p>
-
-        <!-- Bouton -->
-        <a href=""
-           class="inline-block mt-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 
-                  text-white font-semibold rounded-xl shadow-md transform 
-                  hover:scale-105 transition duration-300">
-          En savoir plus
-        </a>
-      </div>
-
-    </div>
-  </div>
-</section>
+<!-- FONT AWESOME -->
+<script src="https://kit.fontawesome.com/a2e0e6ad63.js" crossorigin="anonymous"></script>
 
 
 
 
-<section class="py-16 bg-gray-50">
-  <div class="container mx-auto px-6 lg:px-16">
-
-    <!-- Titre -->
-    <h2 class="text-4xl font-bold text-gray-800 mb-10 text-center">
-      Genie Civil
-    </h2>
-
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-      <!-- IMAGE PRINCIPALE -->
-      <div class="relative opacity-0 translate-y-8 transition-all duration-700 scroll-animate">
-        <img src="./images/gn1.JPG" alt="" 
-             class="rounded-2xl shadow-xl object-cover w-full h-72">
-        
-        <!-- Image flottante -->
-        <img src="./images/gn3 (1).JPG" alt=""
-             class="absolute -bottom-10 right-4 w-48 rounded-xl shadow-lg 
-             border-4 border-white transform hover:scale-105 transition duration-500">
-      </div>
-      
-
-      <!-- TEXTE -->
-      <div class="opacity-0 translate-y-8 transition-all duration-700 delay-200 scroll-animate">
-        <p class="text-gray-700 leading-relaxed mb-5">
-          Avec le développement des nouvelles technologies de l’information et de la communication
-          (NTIC), de plus en plus d’entreprises sont équipées de postes informatiques. La complexité
-          des logiciels et de vos matériels informatiques requiert bien souvent un service de maintenance.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-5">
-          <span class="font-semibold text-blue-600">Eagle Engineering</span> assure la maintenance
-          des parcs informatiques des PME, Corporate et clients résidentiels.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed mb-5">
-          Garantissez le bon fonctionnement de votre système d'information grâce à une maintenance 
-          proactive. Nous maximisons la fiabilité et la durabilité de votre équipement informatique.
-        </p>
-
-        <p class="text-gray-700 leading-relaxed">
-          De plus, <span class="font-semibold text-blue-600">Eagle Engineering</span> assure la 
-          maintenance des imprimantes ainsi que le déploiement des réseaux informatiques d’entreprise.
-        </p>
-
-        <!-- Bouton -->
-        <a href=""
-           class="inline-block mt-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 
-                  text-white font-semibold rounded-xl shadow-md transform 
-                  hover:scale-105 transition duration-300">
-          En savoir plus
-        </a>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 
 
@@ -750,7 +662,69 @@ acquisition, antenna tilt, etc.
         }
 
 
+        // project-animations.js
+document.addEventListener('DOMContentLoaded', () => {
+    const projectCards = document.querySelectorAll('.project-card');
 
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Une fois visible, on n'a plus besoin de l'observer
+            }
+        });
+    }, {
+        threshold: 0.2, // Déclenche quand 20% de l'élément est visible
+        rootMargin: '0px 0px -50px 0px' // Commence un peu plus tôt pour un effet plus fluide
+    });
+
+    projectCards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // --- Animations des filtres ---
+    const filterButtons = document.querySelectorAll('.filter-button');
+    const projectGallery = document.getElementById('project-gallery');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Supprime la classe active de tous les boutons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Ajoute la classe active au bouton cliqué
+            button.classList.add('active');
+
+            const filter = button.dataset.filter;
+
+            // Animation de sortie pour les cartes non correspondantes
+            projectCards.forEach(card => {
+                const cardCategories = card.dataset.category.split(' ');
+                const shouldShow = filter === 'all' || cardCategories.includes(filter);
+
+                if (!shouldShow) {
+                    card.classList.remove('is-visible'); // Masque la carte immédiatement
+                    card.classList.add('hidden'); // Cache-le du flux pour ne pas prendre d'espace
+                } else {
+                    card.classList.remove('hidden'); // S'assure qu'il est visible avant l'animation
+                }
+            });
+
+            // Re-animation des cartes correspondantes après un court délai
+            setTimeout(() => {
+                projectCards.forEach(card => {
+                    const cardCategories = card.dataset.category.split(' ');
+                    const shouldShow = filter === 'all' || cardCategories.includes(filter);
+
+                    if (shouldShow) {
+                        card.classList.remove('is-visible'); // Reset pour re-déclencher l'animation
+                        // Force le reflow (important pour re-déclencher la transition CSS)
+                        void card.offsetWidth; 
+                        card.classList.add('is-visible');
+                    }
+                });
+            }, 100); // Court délai pour permettre la suppression des classes CSS
+        });
+    });
+});
     </script>
 </body>
 </html>
